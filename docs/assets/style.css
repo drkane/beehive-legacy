@@ -3504,7 +3504,7 @@ hr {
     display: block;
     position: absolute;
     z-index: -1;
-    background: url(assets/bg-hex-3731649f623b2814ffe0c4da16200679e850cb470ee8b3e222e4f3ec5f56bf94.svg) no-repeat;
+    background: url(bg-hex-3731649f623b2814ffe0c4da16200679e850cb470ee8b3e222e4f3ec5f56bf94.svg) no-repeat;
     width: 600px;
     height: 553px;
     top: -100px;
@@ -3536,7 +3536,7 @@ hr {
 #navbar-logo {
     width: 106px;
     height: 20px;
-    background: url(assets/logo-e35a536e20b951c1ca6e1021b8d8f2ed23820c7181726594153aa30d1091162a.svg) no-repeat;
+    background: url(logo-e35a536e20b951c1ca6e1021b8d8f2ed23820c7181726594153aa30d1091162a.svg) no-repeat;
     background-size: 106px 20px;
     margin-right: auto;
     text-indent: 100%;
@@ -3545,12 +3545,12 @@ hr {
 }
 
 #navbar-logo.blue {
-    background: url(assets/blue-logo-4906b5adf92cfd8b517c6e78f71a535ecf43f310ef4eb95d4a2f70efd32fccf3.svg) no-repeat
+    background: url(blue-logo-4906b5adf92cfd8b517c6e78f71a535ecf43f310ef4eb95d4a2f70efd32fccf3.svg) no-repeat
 }
 
 @media screen and (max-width: 30rem) {
     #navbar-logo.blue {
-        background: url(assets/blue-logo-hex-df0d58d3e090bf33463880e60f2ffaa4b8b599a89b7f83a4f3304c76d8b718c7.svg) no-repeat
+        background: url(blue-logo-hex-df0d58d3e090bf33463880e60f2ffaa4b8b599a89b7f83a4f3304c76d8b718c7.svg) no-repeat
     }
 }
 
@@ -3558,7 +3558,7 @@ hr {
     #navbar-logo {
         width: 24px;
         height: 20px;
-        background: url(assets/logo-hex-49ffb0a0e4e90fbd073e515d27dd834eb9ac5127d795cd889150f145c188934e.svg) no-repeat;
+        background: url(logo-hex-49ffb0a0e4e90fbd073e515d27dd834eb9ac5127d795cd889150f145c188934e.svg) no-repeat;
         background-size: 24px 20px
     }
 }
@@ -3693,13 +3693,13 @@ footer.white hr {
 .private>.icon {
     height: 10px;
     margin-bottom: 4px;
-    background: url(assets/eye-cross-92e7c6bfa03119e2ed7b44bb3bbd5bb02c6a7c6ec5de2263e12eef188e6526a4.svg) no-repeat
+    background: url(eye-cross-92e7c6bfa03119e2ed7b44bb3bbd5bb02c6a7c6ec5de2263e12eef188e6526a4.svg) no-repeat
 }
 
 .public>.icon {
     height: 8px;
     margin-bottom: 5px;
-    background: url(assets/eye-4800d48be7aeaaca2f78e7e4dd318fabdf1dfa891a156ee6e0d8a7a8d3626274.svg) no-repeat
+    background: url(eye-4800d48be7aeaaca2f78e7e4dd318fabdf1dfa891a156ee6e0d8a7a8d3626274.svg) no-repeat
 }
 
 dialog {
