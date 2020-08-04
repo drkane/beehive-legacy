@@ -89,7 +89,7 @@ var app = new Vue({
         }
     },
     mounted() {
-        fetch('/results.json')
+        fetch('results.json')
             .then(r => r.json())
             .then(response => (this.stats = response))
     },
