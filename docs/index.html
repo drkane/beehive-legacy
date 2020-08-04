@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Beehive - Grant funding suitability checker</title>
+    <link rel="stylesheet" media="all" href="/assets/style.css" />
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+</head>
+
+<body class="bg-ice">
+
+    <header class='bg-ice'>
+        <div class='maxw1050 mx-auto px15'>
+            <nav class='pt20 mb7 heading bold flex justify-between items-center'>
+                <a id="navbar-logo" alt="Beehive logo" class="blue" href="/">Beehive</a>
+            </nav>
+        </div>
+
+    </header>
+
+    <main class=" maxw1050 mx-auto" style="overflow: hidden" id="app">
+        <div class="maxw1050 mx-auto mt40 flex flex-wrap items-center">
+            <div class="col2 px15 mb40">
+                <h1 class="bold mb20">Beehive Legacy</h1>
+                <p class="h4 mb30 night">Explore proposals submitted to Beehive over five years</p>
+            </div>
+            <!-- <div class="col2 mb40">
+                <div class="col1 md px15" id="hex">
+                </div>
+            </div> -->
+        </div>
+        <div class="mt40 flex flex-wrap">
+            <div class="col2 px15">
+                <h3 class="bold night mb40">About the proposals</h3>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        How much funding were the proposals for?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <p class="mb15">
+                            Based on the minimum funding asked for.
+                        </p>
+                        <p class="mb15">
+                            The average amount of funding asked for was £{{ currentStats.amount_stats['50%'] | formatNumber }}.
+                        </p>
+                        <bar-chart :chart-data="chartData('amount_bins')" v-bind:height="300" v-bind:hide-legend="show == 'all'"></bar-chart>
+                    </div>
+                </div>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        What type of funding was the proposal for?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <bar-chart :chart-data="chartData('category')" v-bind:height="200" v-bind:hide-legend="show == 'all'"></bar-chart>
+                    </div>
+                </div>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        How long is the proposal for?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <bar-chart :chart-data="chartData('duration_bins')" v-bind:height="300" v-bind:hide-legend="show == 'all'"></bar-chart>
+                    </div>
+                </div>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        What scale will the project operate at?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <bar-chart :chart-data="chartData('geographic_scale')" v-bind:height="300" v-bind:hide-legend="show == 'all'"></bar-chart>
+                    </div>
+                </div>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        Which regions will the project happen in?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <bar-chart :chart-data="chartData('area')" v-bind:height="400" v-bind:hide-legend="show == 'all'"></bar-chart>
+                    </div>
+                </div>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        What themes does the proposal cover?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <bar-chart :chart-data="chartData('themes')" v-bind:height="400" v-bind:hide-legend="show == 'all'"></bar-chart>
+                    </div>
+                </div>
+                <h3 class="bold night mb40">About the organisations</h3>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        What type of organisation?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <bar-chart :chart-data="chartData('recipient_category')" v-bind:height="300" v-bind:hide-legend="show == 'all'"></bar-chart>
+                    </div>
+                </div>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        What size of organisation?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <bar-chart :chart-data="chartData('recipient_income_band')" v-bind:height="250" v-bind:hide-legend="false"></bar-chart>
+                        <p class="fs14 slate mt13">Figures for UK charities from <a href="https://data.ncvo.org.uk/profile/">NCVO UK Civil Society Almanac 2020</a>.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded shadow mb40">
+                    <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
+                        How old is the organisation?
+                    </div>
+                    <div class="p20 heading h5 markdown">
+                        <bar-chart :chart-data="chartData('recipient_operating_for')" v-bind:height="200" v-bind:hide-legend="show == 'all'"></bar-chart>
+                    </div>
+                </div>
+            </div>
+            <div class="col1 md px15" v-if="stats">
+                <div class="mb15">
+                    <div class="input_wrapper grouped_select">
+                        <label class="label grouped_select" for="filter_results">Filter proposals</label>
+
+                        <select v-model="show" class="bg-white input grouped_select required mb15" id="filter_results">
+                            <option value="all">All proposals</option>
+                            <optgroup label="Themes" v-if="stats.theme">
+                                <option v-for="v, k in stats.theme" v-bind:value="'theme.' + k">{{ k }}</option>
+                            </optgroup>
+                            <optgroup label="Areas" v-if="allStats.area">
+                                <option v-for="v, k in allStats.area" v-bind:value="'area.' + k">{{ k }}</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <p v-if="show == 'all'">
+                    Showing <strong>{{ currentStats.amount_stats.count | formatNumber }}</strong> proposals
+                </p>
+                <p v-else>
+                    <strong>{{ currentStats.amount_stats.count | formatNumber }}</strong> proposals
+                    out of <strong>{{ allStats.amount_stats.count | formatNumber }}</strong> 
+                    ({{ ((currentStats.amount_stats.count / allStats.amount_stats.count) * 100).toFixed(0) }}%)
+                    were in <strong>{{ currentTitle }}</strong>.
+                </p>
+                <div v-if="show.startsWith('theme.')">
+                    <bar-chart :chart-data="chartData('themes', 'all', false, show.replace('theme.', ''))" v-bind:height="450" v-bind:hide-legend="true"></bar-chart>
+                </div>
+                <div v-if="show.startsWith('area.')">
+                    <bar-chart :chart-data="chartData('area', 'all', false, show.replace('area.', ''))" v-bind:height="450" v-bind:hide-legend="true"></bar-chart>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class='bg-ice' style='z-index: 1'>
+        <footer class='fs14 maxw1050 mx-auto px15 slate'>
+            <hr class='mb30'>
+            <div class='flex flex-wrap justify-between items-center mb40'>
+                <div class='footer-links'>
+                    <!-- <a class="mr10" href="/about">About</a>
+                    <a class="mx10" href="/pricing">Pricing</a>
+                    <a class="mx10" href="/articles">Blog</a>
+                    <a class="mx10" href="mailto:support@beehivegiving.org">Contact</a> -->
+                </div>
+                <a class="mx-auto footer-logo" href="/"><img width="28" alt="Beehive logo"
+                        src="/assets/footer-hex-f48e969ca89e7fc86dc8e31ec728d75a9eaa173c481ba16017bf682c47047b83.svg" />
+                </a>
+                <div class='footer-links right-align'>
+                    <a class="mx10" href="/faq">FAQ</a>
+                    <a class="mx10" href="/privacy">Privacy</a>
+                    <a class="mx10" href="/terms">Terms</a>
+                    <a class="ml10" target="_blank" rel="noopener" href="http://www.wearecast.org.uk">© 2020 CAST</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <script src="/assets/app.js"></script>
+
+</body>
+
+</html>
