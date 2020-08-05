@@ -35,7 +35,20 @@
         </div>
         <div class="mt40 flex flex-wrap">
             <div class="col2 px15">
-                <h3 class="bold night mb40">About the proposals</h3>
+                <h3 class="bold night mb20">A typical proposal...</h3>
+                <p class="mb10 pl20">
+                    ...was for <strong>{{ biggestValue('amount_bins') }}</strong>
+                    for <strong>{{ biggestValue('category').toLowerCase() }}</strong> funding
+                    lasting <strong>{{ biggestValue('duration_bins').toLowerCase() }}</strong>
+                    at a <strong>{{ biggestValue('geographic_scale').toLowerCase() }}</strong> level
+                    working in <strong>{{ biggestValue('themes').toLowerCase() }}</strong>
+                </p>
+                <p class="mb10 pl20">
+                    ...from <strong>{{ biggestValue('recipient_category').toLowerCase() }}</strong> with income 
+                    <strong>{{ biggestValue('recipient_income_band').toLowerCase() }}</strong> which is
+                    <strong>{{ biggestValue('recipient_operating_for').toLowerCase() }}</strong> old.
+                </p>
+                <h3 class="bold night mb40 mt40">About the proposals</h3>
                 <div class="bg-white rounded shadow mb40">
                     <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
                         How much funding were the proposals for?
@@ -47,7 +60,7 @@
                         <p class="mb15">
                             The average amount of funding asked for was £{{ currentStats.amount_stats['50%'] | formatNumber }}.
                         </p>
-                        <bar-chart :chart-data="chartData('amount_bins')" v-bind:height="300" v-bind:hide-legend="show == 'all'"></bar-chart>
+                        <bar-chart :chart-data="chartData('amount_bins')" v-bind:height="300" v-bind:percentages="true" v-bind:hide-legend="show == 'all'"></bar-chart>
                     </div>
                 </div>
                 <div class="bg-white rounded shadow mb40">
@@ -55,7 +68,7 @@
                         What type of funding was the proposal for?
                     </div>
                     <div class="p20 heading h5 markdown">
-                        <bar-chart :chart-data="chartData('category')" v-bind:height="200" v-bind:hide-legend="show == 'all'"></bar-chart>
+                        <bar-chart :chart-data="chartData('category')" v-bind:height="200" v-bind:percentages="true" v-bind:hide-legend="show == 'all'"></bar-chart>
                     </div>
                 </div>
                 <div class="bg-white rounded shadow mb40">
@@ -63,7 +76,7 @@
                         How long is the proposal for?
                     </div>
                     <div class="p20 heading h5 markdown">
-                        <bar-chart :chart-data="chartData('duration_bins')" v-bind:height="300" v-bind:hide-legend="show == 'all'"></bar-chart>
+                        <bar-chart :chart-data="chartData('duration_bins')" v-bind:height="300" v-bind:percentages="true" v-bind:hide-legend="show == 'all'"></bar-chart>
                     </div>
                 </div>
                 <div class="bg-white rounded shadow mb40">
@@ -71,7 +84,7 @@
                         What scale will the project operate at?
                     </div>
                     <div class="p20 heading h5 markdown">
-                        <bar-chart :chart-data="chartData('geographic_scale')" v-bind:height="300" v-bind:hide-legend="show == 'all'"></bar-chart>
+                        <bar-chart :chart-data="chartData('geographic_scale')" v-bind:height="300" v-bind:percentages="true" v-bind:hide-legend="show == 'all'"></bar-chart>
                     </div>
                 </div>
                 <div class="bg-white rounded shadow mb40">
@@ -79,7 +92,7 @@
                         Which regions will the project happen in?
                     </div>
                     <div class="p20 heading h5 markdown">
-                        <bar-chart :chart-data="chartData('area')" v-bind:height="400" v-bind:hide-legend="show == 'all'"></bar-chart>
+                        <bar-chart :chart-data="chartData('area')" v-bind:height="400" v-bind:percentages="true" v-bind:hide-legend="show == 'all'"></bar-chart>
                     </div>
                 </div>
                 <div class="bg-white rounded shadow mb40">
@@ -87,7 +100,7 @@
                         What themes does the proposal cover?
                     </div>
                     <div class="p20 heading h5 markdown">
-                        <bar-chart :chart-data="chartData('themes')" v-bind:height="400" v-bind:hide-legend="show == 'all'"></bar-chart>
+                        <bar-chart :chart-data="chartData('themes')" v-bind:height="400" v-bind:percentages="true" v-bind:hide-legend="show == 'all'"></bar-chart>
                     </div>
                 </div>
                 <h3 class="bold night mb40">About the organisations</h3>
@@ -96,7 +109,7 @@
                         What type of organisation?
                     </div>
                     <div class="p20 heading h5 markdown">
-                        <bar-chart :chart-data="chartData('recipient_category')" v-bind:height="300" v-bind:hide-legend="show == 'all'"></bar-chart>
+                        <bar-chart :chart-data="chartData('recipient_category')" v-bind:height="300" v-bind:percentages="true" v-bind:hide-legend="show == 'all'"></bar-chart>
                     </div>
                 </div>
                 <div class="bg-white rounded shadow mb40">
@@ -104,7 +117,7 @@
                         What size of organisation?
                     </div>
                     <div class="p20 heading h5 markdown">
-                        <bar-chart :chart-data="chartData('recipient_income_band')" v-bind:height="250" v-bind:hide-legend="false"></bar-chart>
+                        <bar-chart :chart-data="chartData('recipient_income_band')" v-bind:height="250" v-bind:percentages="true" v-bind:hide-legend="false"></bar-chart>
                         <p class="fs14 slate mt13">Figures for UK charities from <a href="https://data.ncvo.org.uk/profile/">NCVO UK Civil Society Almanac 2020</a>.</p>
                     </div>
                 </div>
@@ -113,7 +126,7 @@
                         How old is the organisation?
                     </div>
                     <div class="p20 heading h5 markdown">
-                        <bar-chart :chart-data="chartData('recipient_operating_for')" v-bind:height="200" v-bind:hide-legend="show == 'all'"></bar-chart>
+                        <bar-chart :chart-data="chartData('recipient_operating_for')" v-bind:height="200" v-bind:percentages="true" v-bind:hide-legend="show == 'all'"></bar-chart>
                     </div>
                 </div>
             </div>
@@ -143,10 +156,10 @@
                     were in <strong>{{ currentTitle }}</strong>.
                 </p>
                 <div v-if="show.startsWith('theme.')">
-                    <bar-chart :chart-data="chartData('themes', 'all', false, show.replace('theme.', ''))" v-bind:height="450" v-bind:hide-legend="true"></bar-chart>
+                    <bar-chart :chart-data="chartData('themes', 'all', false, show.replace('theme.', ''))" v-bind:height="450" v-bind:percentages="false" v-bind:hide-legend="true"></bar-chart>
                 </div>
                 <div v-if="show.startsWith('area.')">
-                    <bar-chart :chart-data="chartData('area', 'all', false, show.replace('area.', ''))" v-bind:height="450" v-bind:hide-legend="true"></bar-chart>
+                    <bar-chart :chart-data="chartData('area', 'all', false, show.replace('area.', ''))" v-bind:height="450" v-bind:percentages="false" v-bind:hide-legend="true"></bar-chart>
                 </div>
                 <div v-if="currentExample" class="mt20 border border-mist rounded mb20">
                     <div class="p20 border-bottom border-mist">

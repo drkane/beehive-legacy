@@ -18,12 +18,13 @@ Vue.filter("formatNumber", function (value) {
 Vue.component('bar-chart', {
     extends: VueChartJs.HorizontalBar,
     mixins: [VueChartJs.mixins.reactiveProp],
-    props: ['chartData', 'hideLegend'],
+    props: ['chartData', 'hideLegend', 'percentages'],
     data() {
         return {}
     },
     computed: {
         options: function () {
+            component = this;
             return {
                 responsive: true,
                 legend: {
@@ -34,7 +35,14 @@ Vue.component('bar-chart', {
                         gridLines: {
                             display: false,
                         },
-                        display: false
+                        ticks: {
+                            display: true,
+                            maxTicksLimit: 2,
+                            callback: function(value, index, values) {
+                                return (component.percentages ? value + '%' : value);
+                            }
+                        },
+                        display: (component.percentages ? true : false)
                     }],
                     yAxes: [{
                         gridLines: {
@@ -102,6 +110,9 @@ var app = new Vue({
     },
     methods: {
         chartData: function (chart, label, percentages, highlight_value) {
+            if(!this.stats){
+                return {}
+            }
             if(typeof percentages == 'undefined'){
                 percentages = true;
             }
@@ -147,6 +158,14 @@ var app = new Vue({
                 labels: Object.keys(data),
                 datasets: datasets,
             }
+        },
+        biggestValue: function(chart){
+            if(!this.currentStats){
+                return '';
+            }
+            var data = this.currentStats[chart];
+            var sortedData = Object.entries(data).sort((a,b) => b[1] - a[1]);
+            return sortedData[0][0];
         }
     }
 });
