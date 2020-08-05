@@ -86,6 +86,13 @@ var app = new Vue({
                 return this.show.replace("theme.", "").replace("area.", "");
             }
             return "All proposals";
+        },
+        currentExample: function(){
+            if(this.currentStats){
+                return this.currentStats['examples'][
+                    Math.floor(Math.random() * this.currentStats['examples'].length)
+                ];
+            }
         }
     },
     mounted() {

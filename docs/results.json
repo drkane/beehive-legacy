@@ -589,7 +589,7 @@
                     "recipient_category": "A charitable organisation",
                     "amount_bins": "\u00a3500 - \u00a31k",
                     "duration_bins": "12 months"
-                },
+                }
             ]
         },
         "West Midlands": {
@@ -5292,7 +5292,7 @@
                     "geographic_scale": "national",
                     "recipient_operating_for": "Less than 12 months",
                     "recipient_income_band": "Less than \u00a310k",
-                    "area": NaN,
+                    "area": null,
                     "category": "Capital",
                     "recipient_category": "An unincorporated association",
                     "amount_bins": "\u00a35k - \u00a310k",

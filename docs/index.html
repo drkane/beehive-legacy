@@ -148,6 +148,32 @@
                 <div v-if="show.startsWith('area.')">
                     <bar-chart :chart-data="chartData('area', 'all', false, show.replace('area.', ''))" v-bind:height="450" v-bind:hide-legend="true"></bar-chart>
                 </div>
+                <div v-if="currentExample" class="mt20 border border-mist rounded mb20">
+                    <div class="p20 border-bottom border-mist">
+                        <h6 class="bold slate">Example Proposal</h6>
+                        <div class="fs14 lh18 slate">from {{ currentExample.recipient_category.toLowerCase() }}</div>
+                    </div>
+                    <div class="m20">
+                        <div class="fs14 heading bold night mb5">Title</div>
+                        <div class="fs14 lh18 slate">{{ currentExample.title }}</div>
+                    </div>
+                    <div class="m20">
+                        <div class="fs14 heading bold night mb5">Description</div>
+                        <div class="fs14 lh18 slate">{{ currentExample.description }}</div>
+                    </div>
+                    <div class="m20">
+                        <div class="fs14 heading bold night mb5">Support type</div>
+                        <div class="fs14 lh18 slate">{{ currentExample.category }}</div>
+                    </div>
+                    <div class="m20">
+                        <div class="fs14 heading bold night mb5">Amount sought</div>
+                        <div class="fs14 lh18 slate">{{ currentExample.amount_bins }}</div>
+                    </div>
+                    <div class="m20" v-if="currentExample.area">
+                        <div class="fs14 heading bold night mb5">Area of benefit</div>
+                        <div class="fs14 lh18 slate">{{ currentExample.area }}</div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
