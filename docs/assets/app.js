@@ -101,7 +101,15 @@ var app = new Vue({
                     Math.floor(Math.random() * this.currentStats['examples'].length)
                 ];
             }
-        }
+        },
+        wordCountStats: function(){
+            if(this.currentStats){
+                return {
+                    max: Math.max(...Object.values(this.currentStats['word_counts'])),
+                    min: Math.min(...Object.values(this.currentStats['word_counts'])),
+                }
+            }
+        },
     },
     mounted() {
         fetch('results.json')
@@ -200,6 +208,13 @@ var app = new Vue({
             var data = this.currentStats[chart];
             var sortedData = Object.entries(data).sort((a,b) => b[1] - a[1]);
             return sortedData[0][0];
+        },
+        fontSize: function(count){
+            var scaling = 20;
+            if(this.wordCountStats.max > this.wordCountStats.min) {
+                scaling = 50;
+            }
+            return (((count / this.wordCountStats.max) * scaling) + 10) + 'px';
         }
     }
 });

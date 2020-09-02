@@ -3545,7 +3545,7 @@ hr {
 }
 
 #navbar-logo.blue {
-    background: url(blue-logo-4906b5adf92cfd8b517c6e78f71a535ecf43f310ef4eb95d4a2f70efd32fccf3.svg) no-repeat
+    background: url(blue-logo.svg) no-repeat
 }
 
 @media screen and (max-width: 30rem) {
