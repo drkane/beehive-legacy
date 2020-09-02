@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ recipient.name }} | Beehive - Grant funding suitability checker</title>
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+        .page-break {
+            break-inside: avoid;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+
+    <header class=''>
+        <div class=' px15'>
+            <nav class='pt20 mb7 heading bold flex justify-between items-center'>
+                <span class="maxw150">
+                    <img src="{{ url_for('static', filename='blue-logo.png') }}" />
+                </span>
+            </nav>
+        </div>
+
+    </header>
+
+    <main class=" " style="overflow: hidden" id="app">
+        <div class=" mt40 flex flex-wrap items-center">
+            <div class="px15 mb40">
+                <h1 class="bold mb20">{{ recipient.name }}</h1>
+                <p class="h4 mb30 night">
+                {% if proposals|length > 1 %}
+                Proposals submitted to Beehive by {{ recipient.name }}
+                {% else %}
+                A proposal submitted to Beehive by {{ recipient.name }}
+                {% endif %}
+                </p>
+                <h2>About Beehive</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu turpis egestas pretium aenean pharetra. Vel orci porta non pulvinar neque laoreet. Diam maecenas ultricies mi eget mauris pharetra et ultrices neque. Sollicitudin nibh sit amet commodo. Egestas diam in arcu cursus. Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis. Feugiat nisl pretium fusce id velit ut tortor. Tempor orci dapibus ultrices in iaculis. Tellus at urna condimentum mattis pellentesque id nibh tortor id.
+                </p>
+            </div>
+        </div>
+        <div class="mt40 flex flex-wrap">
+            <div class="px15 markdown">
+                {% for p in proposals %}
+                <div class="bg-white rounded  mb40 page-break" id="">
+                    <h4 class="p20 bg-ice">
+                        {% if p.title %}
+                        {{ p.title }}
+                        {% else %}
+                        Proposal #{{ p.id }}
+                        {% endif %}
+                        <br><span class="grey">
+                        About this proposal</span>
+                    </h4>
+                    <div class="">
+                        <div class="my20">
+                            <div class="fs18 heading bold night mb5">Created</div>
+                            <div class="fs18 lh18">{{ "{:%d %B %Y}".format(p.created_at) }}</div>
+                        </div>
+                        {% if p.title %}
+                        <div class="my20">
+                            <div class="fs18 heading bold night mb5">Title</div>
+                            <div class="fs18 lh18">{{ p.title }}</div>
+                        </div>
+                        {% endif %}
+                        {% if p.description %}
+                        <div class="my20">
+                            <div class="fs18 heading bold night mb5">Description</div>
+                            <div class="fs18 lh18">{{ p.description }}</div>
+                        </div>
+                        {% endif %}
+                        <div class="my20">
+                            <div class="fs18 heading bold night mb5">Support type</div>
+                            <div class="fs18 lh18">{{ p.category }}</div>
+                        </div>
+                        {% if p.min_amount > 0 and p.max_amount > 0 %}
+                        <div class="my20">
+                            <div class="fs18 heading bold night mb5">Amount sought</div>
+                            <div class="fs18 lh18">
+                            {% if p.min_amount != p.max_amount %}
+                            Between £{{ "{:,.0f}".format(p.min_amount) }} and £{{ "{:,.0f}".format(p.max_amount) }}
+                            {% else %}
+                            £{{ "{:,.0f}".format(p.min_amount) }}
+                            {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if p.area is string %}
+                        <div class="my20">
+                            <div class="fs18 heading bold night mb5">Area of benefit</div>
+                            <div class="fs18 lh18">{{ p.area }}</div>
+                        </div>
+                        {% endif %}
+                        <div class="my20">
+                            <div class="fs18 heading bold night mb5">Themes</div>
+                            <div class="fs18 lh18">
+                            {% for t in p.themes %}
+                            {% if not loop.first %} • {% endif %}
+                            {{ t }}
+                            {% endfor %}</div>
+                        </div>
+                        {% if p.funds %}
+                        <div class="my20">
+                            <div class="fs18 heading bold night mb10">Potential funds</div>
+                            <div class="fs18 lh18">
+                            <ul>
+                            {% for f in p.funds %}
+                            <li class="mb5"><a href="{{ f.fund_website }}">{{ f.funder }}</a></li>
+                            {% endfor %}
+                            </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col1 md px15">
+            </div>
+        </div>
+    </main>
+
+    <div class='' style='z-index: 1'>
+        <footer class='fs16 px15 slate'>
+            <hr class='mb30'>
+            <div class='flex flex-wrap justify-between items-center mb40'>
+                <div class='footer-links'>
+                    <a class="" target="_blank" rel="noopener" href="http://www.wearecast.org.uk">© 2020 CAST</a> | 
+                    <a class="" target="_blank" rel="noopener" href="http://www.beehivegiving.org/">beehivegiving.org</a> |
+                    Created {{ now }}
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</body>
+
+</html>
