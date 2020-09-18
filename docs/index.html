@@ -48,16 +48,16 @@
             <div class="col2 px15">
                 <h3 class="bold night mb20">A typical proposal...</h3>
                 <p class="mb10 pl20">
-                    ...was for <strong>{{ biggestValue('amount_bins') }}</strong>
-                    for <strong>{{ biggestValue('category').toLowerCase() }}</strong> funding
-                    lasting <strong>{{ biggestValue('duration_bins').toLowerCase() }}</strong>
-                    at a <strong>{{ biggestValue('geographic_scale').toLowerCase() }}</strong> level
-                    working in <strong>{{ biggestValue('themes').toLowerCase() }}</strong>
+                    ...was for <strong>#{ biggestValue('amount_bins') }#</strong>
+                    for <strong>#{ biggestValue('category').toLowerCase() }#</strong> funding
+                    lasting <strong>#{ biggestValue('duration_bins').toLowerCase() }#</strong>
+                    at a <strong>#{ biggestValue('geographic_scale').toLowerCase() }#</strong> level
+                    working in <strong>#{ biggestValue('themes').toLowerCase() }#</strong>
                 </p>
                 <p class="mb10 pl20">
-                    ...from <strong>{{ biggestValue('recipient_category').toLowerCase() }}</strong> with income 
-                    <strong>{{ biggestValue('recipient_income_band').toLowerCase() }}</strong> which is
-                    <strong>{{ biggestValue('recipient_operating_for').toLowerCase() }}</strong> old.
+                    ...from <strong>#{ biggestValue('recipient_category').toLowerCase() }#</strong> with income 
+                    <strong>#{ biggestValue('recipient_income_band').toLowerCase() }#</strong> which is
+                    <strong>#{ biggestValue('recipient_operating_for').toLowerCase() }#</strong> old.
                 </p>
                 <div class="bg-white rounded shadow mb40">
                     <div class="bg-ice rounded-top border-bottom border-mist p20 h5 bold">
@@ -68,7 +68,7 @@
                             <li v-for="count, word in this.currentStats.word_counts"
                                 :key="word"
                                 class="inline-block mr10 mb10"
-                                v-bind:style="{ fontSize: fontSize(count), color: '#5aa0ff' }">{{ word }}</li>
+                                v-bind:style="{ fontSize: fontSize(count), color: '#5aa0ff' }">#{ word }#</li>
                         </ul>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                             The results are compared to grants made by 360Giving publishers over the same time period.
                         </p>
                         <p class="mb15">
-                            The average amount of funding asked for was £{{ currentStats.amount_stats['50%'] | formatNumber }}.
+                            The average amount of funding asked for was £#{ currentStats.amount_stats['50%'] | formatNumber }#.
                             <span v-if="currentStats.amount_stats['50%'] < 5000">This is less than the average grant made by 360Giving publishers.</span>
                             <span v-else-if="currentStats.amount_stats['50%'] > 10000">This is more than the average grant made by 360Giving publishers.</span>
                             <span v-else>This is around the same as the average grant made by 360Giving publishers.</span>
@@ -196,22 +196,22 @@
                         <select v-model="show" class="bg-white input grouped_select required mb15" id="filter_results">
                             <option value="all">All proposals</option>
                             <optgroup label="Themes" v-if="stats.theme">
-                                <option v-for="v, k in stats.theme" v-bind:value="'theme.' + k">{{ k }}</option>
+                                <option v-for="v, k in stats.theme" v-bind:value="'theme.' + k">#{ k }#</option>
                             </optgroup>
                             <optgroup label="Areas" v-if="allStats.area">
-                                <option v-for="v, k in allStats.area" v-bind:value="'area.' + k">{{ k }}</option>
+                                <option v-for="v, k in allStats.area" v-bind:value="'area.' + k">#{ k }#</option>
                             </optgroup>
                         </select>
                     </div>
                 </div>
                 <p v-if="show == 'all'">
-                    Showing <strong>{{ currentStats.amount_stats.count | formatNumber }}</strong> proposals
+                    Showing <strong>#{ currentStats.amount_stats.count | formatNumber }#</strong> proposals
                 </p>
                 <p v-else>
-                    <strong>{{ currentStats.amount_stats.count | formatNumber }}</strong> proposals
-                    out of <strong>{{ allStats.amount_stats.count | formatNumber }}</strong> 
-                    ({{ ((currentStats.amount_stats.count / allStats.amount_stats.count) * 100).toFixed(0) }}%)
-                    were in <strong>{{ currentTitle }}</strong>.
+                    <strong>#{ currentStats.amount_stats.count | formatNumber }#</strong> proposals
+                    out of <strong>#{ allStats.amount_stats.count | formatNumber }#</strong> 
+                    (#{ ((currentStats.amount_stats.count / allStats.amount_stats.count) * 100).toFixed(0) }#%)
+                    were in <strong>#{ currentTitle }#</strong>.
                 </p>
                 <div v-if="show.startsWith('theme.')">
                     <bar-chart :chart-data="chartData('themes', 'all', false, show.replace('theme.', ''))" v-bind:height="450" v-bind:percentages="false" v-bind:hide-legend="true"></bar-chart>
@@ -222,27 +222,27 @@
                 <div v-if="currentExample" class="mt20 border border-mist rounded mb20">
                     <div class="p20 border-bottom border-mist">
                         <h6 class="bold slate">Example Proposal</h6>
-                        <div class="fs14 lh18 slate">from {{ currentExample.recipient_category.toLowerCase() }}</div>
+                        <div class="fs14 lh18 slate">from #{ currentExample.recipient_category.toLowerCase() }#</div>
                     </div>
                     <div class="m20">
                         <div class="fs14 heading bold night mb5">Title</div>
-                        <div class="fs14 lh18 slate">{{ currentExample.title }}</div>
+                        <div class="fs14 lh18 slate">#{ currentExample.title }#</div>
                     </div>
                     <div class="m20">
                         <div class="fs14 heading bold night mb5">Description</div>
-                        <div class="fs14 lh18 slate">{{ currentExample.description }}</div>
+                        <div class="fs14 lh18 slate">#{ currentExample.description }#</div>
                     </div>
                     <div class="m20">
                         <div class="fs14 heading bold night mb5">Support type</div>
-                        <div class="fs14 lh18 slate">{{ currentExample.category }}</div>
+                        <div class="fs14 lh18 slate">#{ currentExample.category }#</div>
                     </div>
                     <div class="m20">
                         <div class="fs14 heading bold night mb5">Amount sought</div>
-                        <div class="fs14 lh18 slate">{{ currentExample.amount_bins }}</div>
+                        <div class="fs14 lh18 slate">#{ currentExample.amount_bins }#</div>
                     </div>
                     <div class="m20" v-if="currentExample.area">
                         <div class="fs14 heading bold night mb5">Area of benefit</div>
-                        <div class="fs14 lh18 slate">{{ currentExample.area }}</div>
+                        <div class="fs14 lh18 slate">#{ currentExample.area }#</div>
                     </div>
                 </div>
             </div>

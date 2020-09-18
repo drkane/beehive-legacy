@@ -59,6 +59,7 @@ Vue.component('bar-chart', {
 });
 
 var app = new Vue({
+    delimiters: ["#{", "}#"], // To avoid conflicts with Liquid template language (https://shopify.github.io/liquid/) used by Jekyll.
     el: '#app',
     data() {
         return {
