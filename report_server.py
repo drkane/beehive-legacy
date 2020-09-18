@@ -4,6 +4,10 @@ import os
 import base64
 import datetime
 
+
+from dotenv import load_dotenv
+load_dotenv()
+
 app = Flask(__name__)
 
 db_con = os.environ.get('DB_URL')

@@ -8,6 +8,7 @@ load_dotenv()
 
 recipients = pd.read_sql('''
 select distinct p.recipient_id,
+    p.id as proposal_id,
     r.name as "recipient_name",
     u.first_name,
     u.last_name,
@@ -19,19 +20,27 @@ from proposals p
         on p.recipient_id = r.id 
     inner join users u
         on p.user_id = u.id
-''', con=os.getenv("DB_URL"), index_col='recipient_id')
-print("{:,.0f} recipients to create".format(len(recipients)))
+''', con=os.getenv("DB_URL"), index_col='proposal_id')
 
-recipients = recipients.sample(10)
+proposals_to_report = pd.read_csv('reports/reports_to_check.csv')['proposal_id']
+
+recipients = recipients[recipients.index.isin(proposals_to_report)]
 recipients.loc[:, 'output_report'] = None
+print("{:,.0f} recipients to create".format(len(recipients)))
 
 for r in tqdm.tqdm(recipients.index):
     output_filename = "reports/beehive_legacy_{}.pdf".format(r)
-    pdfkit.from_url(
-        'http://127.0.0.1:5000/report/{}'.format(r),
-        output_filename,
-        options={ 'quiet': '' },
-    )
+    try:
+        pdfkit.from_url(
+            'http://127.0.0.1:3000/reports/{}'.format(r),
+            output_filename,
+            options={
+                'quiet': '',
+                'margin-left': '0',
+                'margin-right': '0',
+            },
+        )
+    except OSError:
+        print("Could not create report", r)
     recipients.loc[r, 'output_report'] = output_filename
-
-recipients.to_csv('reports/mailing_list.csv')
+    recipients.sort_values("email").to_csv('reports/mailing_list.csv')
